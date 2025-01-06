@@ -1,4 +1,11 @@
 {
+  "name": "testing",
+  "version": "1.0.0",
+  "description": "Test project",
+  "main": "python.js",
+  "scripts": {
+    "start": "node python.js"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2"
