@@ -11,8 +11,8 @@ app.use(express.json());
 // Endpoint to fetch system UUID and save to a file
 app.get('/get-uuid', (req, res) => {
     const platform = os.platform();
-
     let command;
+
     if (platform === 'win32') {
         command = 'wmic csproduct get UUID';
     } else if (platform === 'linux') {
@@ -34,7 +34,7 @@ app.get('/get-uuid', (req, res) => {
         // Extract UUID based on platform
         if (platform === 'win32') {
             const lines = stdout.split('\n').map(line => line.trim());
-            uuid = lines[1]; // Typically UUID is on the second line
+            uuid = lines[1]?.trim(); // Typically UUID is on the second line
         } else if (platform === 'linux' || platform === 'darwin') {
             uuid = stdout.trim();
             if (platform === 'darwin') {
@@ -54,7 +54,7 @@ app.get('/get-uuid', (req, res) => {
                 res.json({ uuid, message: 'UUID saved to file successfully!' });
             });
         } else {
-            res.status(500).json({ error: 'Unable to parse UUID' });
+            res.status(404).json({ error: 'UUID not found' });
         }
     });
 });
